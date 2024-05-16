@@ -1,5 +1,6 @@
 from app.models import Client
 from app.repositories.client_repository import ClientRepository
+from app import cache
 
 
 class ClientService:
@@ -8,20 +9,31 @@ class ClientService:
 
     #Create
     def create(self, entity: Client) -> Client:
-        return self.__repo.create(entity)
+        client = self.__repo.create(entity)
+        cache.set(f'client_{client.id}', client, timeout=50)
+        return client
+
         
     #Read
     def find_all(self) -> Client:
         return self.__repo.find_all()
     
     def find_by_id(self, id: int) -> Client:
-        return self.__repo.find_by_id(id)
+        client = cache.get(f'client_{id}')
+        if client is None:
+            client = self.__repo.find_by_id(id)
+            cache.set(f'client_{id}', client, timeout=50)
+        return client
 
     def find_by_name(self, name) -> list:
         return self.__repo.find_by_name(name)
     
     def find_by_email(self, email) -> Client:
-        return self.__repo.find_by_email(email)
+        client = cache.get(f'client_{email}')
+        if client is None:
+            client = self.__repo.find_by_email(email)
+            cache.set(f'client_{email}', client, timeout=50)
+        return client
     
     #Update
     def update(self, dto, id: int) -> Client:
