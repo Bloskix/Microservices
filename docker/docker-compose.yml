@@ -4,18 +4,13 @@ services:
   traefik:
     image: traefik:v2.5
     command:
-      - --api.insecure=true
-      - --providers.docker=true
-      - --providers.docker.exposedbydefault=false
-      - --entrypoints.web.address=:80
+      --api.insecure=true
+      --providers.docker
     ports:
-      - 80:80
-      - 8080:8080
+      - "80:80"
+      - "8080:8080"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock #lee los servicios que se van creando
-      - ./traefik/traefik.yml:/etc/traefik/traefik.yml
-      - ./traefik/acme.json:/acme.json
-    
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:  
       - microservicio_network
 
@@ -33,6 +28,8 @@ services:
       - PGDATA=/var/lib/data
     volumes:
       - ./data:/var/lib/data
+    depends_on:
+      - traefik
 
   redis:
     container_name: redis
@@ -43,6 +40,8 @@ services:
       - "6379:6379"
     volumes:
       - ./data/redis:/data
+    depends_on:
+      - postgresql
       
   microserviceClient:
     image: microservice_client:1.0
@@ -51,12 +50,9 @@ services:
     ports:
       - "8081:8081"
     depends_on:
-      - postgresql
       - redis
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.microserviceClient.rule=Host(`microserviceClient.localhost`)"
-      - "traefik.http.routers.microserviceClient.entrypoints=web"
+      - "traefik.http.routers.microserviceClient.rule=Host(\"microserviceClient.localhost\")"
 
 networks:
   microservicio_network:
