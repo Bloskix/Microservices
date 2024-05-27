@@ -1,0 +1,16 @@
+services:
+
+  microserviceClient:
+    image: microservice-client:1.0
+    networks:
+      - microservice_network
+    
+    labels:
+        - "traefik.enable=true"
+        - "traefik.http.services.microserviceClient.loadbalancer.server.port=5000"
+        - "traefik.docker.network=microservice_network"
+
+networks:
+  microservice_network:
+    external: true
+    driver: bridge

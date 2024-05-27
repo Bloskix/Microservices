@@ -1,0 +1,26 @@
+services:
+
+  traefik:
+    image: traefik:v2.5
+    ports:
+      - "80:80"
+      - "433:433"
+      - "8080:8080"
+      - "5433:5432"
+      - "6379:6379"   
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./config/traefik.yml:/etc/traefik/traefik.yml
+      - ./config/config.yml:/etc/traefik/config.yml
+      - ./config/certs:/etc/certs
+    networks:  
+      - microservice_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik=true"
+  
+networks:
+  microservice_network:
+    external: true
+    driver: bridge
