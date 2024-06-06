@@ -35,6 +35,6 @@ include/
 Dockerfile
 .dockerignore
 /docker/data
-docker/traefik/config
+docker/traefik/config/certs
 *.dockerfile
 /docker/db/data

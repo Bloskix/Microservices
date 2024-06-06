@@ -17,16 +17,21 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
 
-    cache.init_app(app, config={'CACHE_TYPE': 'RedisCache', 'CACHE_DEFAULT_TIMEOUT': 300,
-                                'CACHE_REDIS_HOST': 'localhost', 'CACHE_REDIS_PORT': 6379,
-                                'CACHE_REDIS_DB': '0', 'CACHE_REDIS_PASSWORD': '123456',
+    cache.init_app(app, config={'CACHE_TYPE': 'RedisCache',
+                                 'CACHE_DEFAULT_TIMEOUT': 300,
+                                 'CACHE_REDIS_HOST': 'redis',
+                                #'CACHE_REDIS_HOST': 'redis', Configuracion para traefik
+                                #'CACHE_REDIS_HOST': 'localhost', Configuracion local
+                                  'CACHE_REDIS_PORT': 6379,
+                                'CACHE_REDIS_DB': '0',
+                                #'CACHE_REDIS_PASSWORD': '123456',
                                 'CACHE_KEY_PREFIX': 'client_'})
  
     from app.resources import home, client
     app.register_blueprint(home, url_prefix='/api/v1')
     app.register_blueprint(client, url_prefix='/api/v1')
 
-    with app.app_context():
-        db.create_all()
+    # with app.app_context():
+    #     db.create_all()
 
     return app

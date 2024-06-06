@@ -3,6 +3,7 @@ from flask import request
 from app import create_app, db
 from app.models.Client import Client
 from app.services.client_service import ClientService
+import time
 
 service = ClientService()
 
@@ -52,6 +53,7 @@ class TestClientCRUD(unittest.TestCase):
         service.create(entity)
         dto = {'name': 'Pedro'}
         service.update(dto, 1)
+        #time.sleep(60) Descomentar si activamos redis en el create
         entity = service.find_by_id(1)
         self.assertEqual(entity.name, 'Pedro')
 
