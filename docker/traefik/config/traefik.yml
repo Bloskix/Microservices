@@ -15,7 +15,6 @@ providers:
     filename: /etc/traefik/config.yml
     watch: true
 
-
 log:
   level: INFO
   format: common
@@ -33,4 +32,4 @@ entryPoints:
           to: https
           scheme: https
   https:
-    address: ":433"
+    address: ":443"

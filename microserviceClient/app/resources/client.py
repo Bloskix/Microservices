@@ -10,6 +10,10 @@ client_schema = ClientSchema()
 response_schema = ResponseSchema()
 client = Blueprint('client', __name__)
 
+@client.route('/', methods=['GET'])
+def index1():
+    return {"message":"Welcome to the product API!"}, 200
+
 #Create
 @client.route('/client/create/', methods=['POST'])
 def create_client():

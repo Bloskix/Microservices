@@ -27,8 +27,7 @@ def create_app():
                                 #'CACHE_REDIS_PASSWORD': '123456',
                                 'CACHE_KEY_PREFIX': 'client_'})
  
-    from app.resources import home, client
-    app.register_blueprint(home, url_prefix='/api/v1')
+    from app.resources import client
     app.register_blueprint(client, url_prefix='/api/v1')
 
     # with app.app_context():

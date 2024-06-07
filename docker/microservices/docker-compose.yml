@@ -7,8 +7,13 @@ services:
     
     labels:
         - "traefik.enable=true"
+        - "traefik.http.routers.microserviceClient.rule=Host(`microserviceClient.microservicio.localhost`)"
+        - "traefik.http.routers.microserviceClient.tls=true"
         - "traefik.http.services.microserviceClient.loadbalancer.server.port=5000"
         - "traefik.docker.network=microservice_network"
+        - "traefik.http.middlewares.ms1.circuitbreaker.expression=LatencyAtQuantileMS(50.0) > 100"
+        - "traefik.http.middlewares.ms1.circuitbreaker.expression=ResponseCodeRatio(500, 600, 0, 600) > 0.25"
+        - "traefik.http.middlewares.ms1.circuitbreaker.expression=NetworkErrorRatio() > 0.5"
 
 networks:
   microservice_network:
