@@ -1,10 +1,12 @@
 from flask import Flask
 from flask_cors import CORS
-from app.config.database import db, migrate, configure_database
+from app.config.database import migrate, configure_database
 from flask_marshmallow import Marshmallow
 from flask_caching import Cache
+from flask_sqlalchemy import SQLAlchemy
 
 ma = Marshmallow()
+db = SQLAlchemy()
 cache = Cache()
 
 def create_app():
@@ -19,7 +21,7 @@ def create_app():
 
     cache.init_app(app, config={'CACHE_TYPE': 'RedisCache',
                                  'CACHE_DEFAULT_TIMEOUT': 300,
-                                 'CACHE_REDIS_HOST': 'redis',
+                                 'CACHE_REDIS_HOST': 'localhost',
                                 #'CACHE_REDIS_HOST': 'redis', Configuracion para traefik
                                 #'CACHE_REDIS_HOST': 'localhost', Configuracion local
                                   'CACHE_REDIS_PORT': 6379,

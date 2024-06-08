@@ -1,9 +1,15 @@
 services:
 
   microserviceClient:
-    image: microservice-client:1.0
+    image: microservice-client:1.1
     networks:
       - microservice_network
+
+    environment:
+      - POSTGRES_URL=postgresql
+      - POSTGRES_USER=postgres
+      - POSTGRES_PW=Mora0303
+      - POSTGRES_DB=ingenieria
     
     labels:
         - "traefik.enable=true"

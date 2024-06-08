@@ -11,11 +11,11 @@ response_schema = ResponseSchema()
 client = Blueprint('client', __name__)
 
 @client.route('/', methods=['GET'])
-def index1():
+def index():
     return {"message":"Welcome to the product API!"}, 200
 
 #Create
-@client.route('/client/create/', methods=['POST'])
+@client.route('/create', methods=['POST'])
 def create_client():
     response_builder = ResponseBuilder()
     client = client_schema.load(request.json)
@@ -23,8 +23,8 @@ def create_client():
     return response_schema.dump((response_builder.build())), 200
 
 #Read
-@client.route('/client/', methods=['GET'])
-def index():
+@client.route('/findAll', methods=['GET'])
+def find_all_clients():
     list = service.find_all()
     result = client_schema_many.dump(list)
     resp = jsonify(result)
@@ -32,7 +32,7 @@ def index():
     return resp
 
 
-@client.route('/client/id/<int:id>', methods=['GET'])
+@client.route('/findById/<int:id>', methods=['GET'])
 def find_by_id(id):
     response_builder = ResponseBuilder()
     response = client_schema.dump(service.find_by_id(id))
@@ -44,7 +44,7 @@ def find_by_id(id):
             response)
         return response_schema.dump((response_builder.build())), 400
     
-@client.route('/client/search/', methods=['GET'])
+@client.route('/findByName/<string:name>', methods=['GET'])
 def find_by_name():
     name = request.args.get('name')
     response_builder = ResponseBuilder()
@@ -58,7 +58,7 @@ def find_by_name():
         return response_schema.dump((response_builder.build())), 400
 
 
-@client.route('/client/email/<string:email>', methods=['GET'])
+@client.route('/findByEmail/<string:email>', methods=['GET'])
 def find_by_email(email):
     response_builder = ResponseBuilder()
     response = client_schema.dump(service.find_by_email(email))
@@ -73,7 +73,7 @@ def find_by_email(email):
         return response_schema.dump((response_builder.build())), 400
     
 #Update
-@client.route('/client/update/<int:id>', methods=['PUT'])
+@client.route('/update/<int:id>', methods=['PUT'])
 def update_client(id):
     response_builder = ResponseBuilder()
     client = request.json
@@ -81,7 +81,7 @@ def update_client(id):
     return response_schema.dump((response_builder.build())), 200
 
 #Delete
-@client.route('/client/delete/<int:id>', methods=['DELETE'])
+@client.route('/delete/<int:id>', methods=['DELETE'])
 def delete_client(id):
     response_builder = ResponseBuilder()
     response_builder.add_message('Usuario eliminado.').add_status_code(200).add_data(client_schema.dump(service.delete(id)))

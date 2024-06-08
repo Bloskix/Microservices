@@ -7,7 +7,6 @@ from flask_migrate import Migrate
 basedir = os.path.abspath(Path(__file__).parents[2])
 load_dotenv(os.path.join(basedir, './app/config/.env'))
 
-db = SQLAlchemy()
 migrate = Migrate()
 
 def configure_database(app):
