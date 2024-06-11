@@ -38,3 +38,6 @@ Dockerfile
 docker/traefik/config/certs
 *.dockerfile
 /docker/db/data
+
+#k6
+zk6 tests/

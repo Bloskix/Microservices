@@ -9,7 +9,7 @@ services:
       - POSTGRES_URL=postgresql
       - POSTGRES_USER=postgres
       - POSTGRES_PW=Mora0303
-      - POSTGRES_DB=ingenieria
+      - POSTGRES_DB=postgres
     
     labels:
         - "traefik.enable=true"

@@ -1,0 +1,24 @@
+services:
+
+  monoliticApp:
+    image: armeriaamerica:1.0
+    networks:
+      - microservice_network
+
+    environment:
+      - POSTGRES_URL=postgresql
+      - POSTGRES_USER=postgres
+      - POSTGRES_PW=Mora0303
+      - POSTGRES_DB=monolitic_db
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.monoliticApp.rule=Host(`monoliticApp.microservicio.localhost`)"
+      - "traefik.http.routers.monoliticApp.tls=true"
+      - "traefik.http.services.monoliticApp.loadbalancer.server.port=5000"
+      - "traefik.docker.network=microservice_network"
+
+networks:
+  microservice_network:
+    external: true
+    driver: bridge

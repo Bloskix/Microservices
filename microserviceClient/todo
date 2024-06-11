@@ -1,4 +1,0 @@
-para recrear la imagen:
-chequear conexion a redis (si la ruta debe ser localhost o el nombre del contenedor) 
-chequear conexion a postgres (idem)
-revisar puertos de el microservicio (en la imagen dicen estar en el 8001)
