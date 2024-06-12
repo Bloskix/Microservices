@@ -17,10 +17,31 @@ services:
         - "traefik.http.routers.microserviceClient.tls=true"
         - "traefik.http.services.microserviceClient.loadbalancer.server.port=5000"
         - "traefik.docker.network=microservice_network"
-        - "traefik.http.middlewares.ms1.circuitbreaker.expression=LatencyAtQuantileMS(50.0) > 100"
-        - "traefik.http.middlewares.ms1.circuitbreaker.expression=ResponseCodeRatio(500, 600, 0, 600) > 0.25"
-        - "traefik.http.middlewares.ms1.circuitbreaker.expression=NetworkErrorRatio() > 0.5"
+        - "traefik.http.middlewares.microserviceClient.circuitbreaker.expression=LatencyAtQuantileMS(50.0) > 100"
+        - "traefik.http.middlewares.microserviceClient.circuitbreaker.expression=ResponseCodeRatio(500, 600, 0, 600) > 0.25"
+        - "traefik.http.middlewares.microserviceClient.circuitbreaker.expression=NetworkErrorRatio() > 0.5"
 
+  microserviceWeapon:
+    image: microservice-weapon:1.0
+    networks:
+      - microservice_network
+
+    environment:
+      - POSTGRES_URL=postgresql
+      - POSTGRES_USER=postgres
+      - POSTGRES_PW=Mora0303
+      - POSTGRES_DB=microserviceWeapon_db
+
+    labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.microserviceWeapon.rule=Host(`microserviceWeapon.microservicio.localhost`)"
+        - "traefik.http.routers.microserviceWeapon.tls=true"
+        - "traefik.http.services.microserviceWeapon.loadbalancer.server.port=5000"
+        - "traefik.docker.network=microservice_network"
+        - "traefik.http.middlewares.microserviceWeapon.circuitbreaker.expression=LatencyAtQuantileMS(50.0) > 100"
+        - "traefik.http.middlewares.microserviceWeapon.circuitbreaker.expression=ResponseCodeRatio(500, 600, 0, 600) > 0.25"
+        - "traefik.http.middlewares.microserviceWeapon.circuitbreaker.expression=NetworkErrorRatio() > 0.5"
+    
 networks:
   microservice_network:
     external: true
