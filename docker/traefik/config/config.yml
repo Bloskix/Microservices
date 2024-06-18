@@ -14,5 +14,5 @@ http:
 
 tls:
   certificates:
-    - certFile: "/etc/certs/microservicios-cert.pem"
-      keyFile: "/etc/certs/microservicios-key.pem"
+    - certFile: "/etc/certs/microservicio-cert.pem"
+      keyFile: "/etc/certs/microservicio-key.pem"
