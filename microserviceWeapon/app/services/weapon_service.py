@@ -9,7 +9,7 @@ class WeaponService:
 
     def create(self, entity: Weapon) -> Weapon:
         print(entity.owner)
-        response = requests.get(f'https://microserviceclient.microservicio.localhost/api/v1/findById/{entity.owner}')
+        response = requests.get(f'http://microserviceClient:5000/api/v1/findById/{entity.owner}')
         if response.status_code != 200:
             raise ValueError('Owner does not exist')
         else:

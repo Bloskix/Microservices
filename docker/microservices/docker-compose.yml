@@ -1,7 +1,7 @@
 services:
 
   microserviceClient:
-    image: microservice-client:1.1
+    image: microservice-client:1.2
     networks:
       - microservice_network
 

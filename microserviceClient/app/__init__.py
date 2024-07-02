@@ -21,7 +21,7 @@ def create_app():
 
     cache.init_app(app, config={'CACHE_TYPE': 'RedisCache',
                                  'CACHE_DEFAULT_TIMEOUT': 300,
-                                 'CACHE_REDIS_HOST': 'localhost',
+                                 'CACHE_REDIS_HOST': 'redis',
                                 #'CACHE_REDIS_HOST': 'redis', Configuracion para traefik
                                 #'CACHE_REDIS_HOST': 'localhost', Configuracion local
                                   'CACHE_REDIS_PORT': 6379,
