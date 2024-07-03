@@ -10,10 +10,3 @@ class Client(db.Model):
     code = db.Column('code', db.String(256))
     address = db.Column('address', db.String(8))
     email = db.Column('email', db.String(105))
-
-    def __init__(self, name, dni, code, address, email):
-        self.name = name
-        self.dni = dni
-        self.code = code
-        self.address = address
-        self.email = email

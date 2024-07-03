@@ -27,9 +27,11 @@ python-dotenv==1.0.0
 pytz==2024.1
 redis==5.0.4
 requests==2.31.0
+scapy==2.5.0
 six==1.16.0
 SQLAlchemy==2.0.20
 sqlalchemy-filters==0.13.0
+tenacity==8.4.2
 typing_extensions==4.7.1
 urllib3==2.2.1
 Werkzeug==2.3.7

@@ -32,7 +32,4 @@ def create_app():
     from app.resources import client
     app.register_blueprint(client, url_prefix='/api/v1')
 
-    # with app.app_context():
-    #     db.create_all()
-
     return app
